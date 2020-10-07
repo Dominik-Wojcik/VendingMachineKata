@@ -1,19 +1,21 @@
 package com.codecool.model;
 
+import java.math.BigDecimal;
+
 public enum Product {
-    COLA(1.0F),
-    CHIPS(0.5F),
-    CANDY(0.65F),
-    NOTHING(-1.0F);
+    COLA("1.0"),
+    CHIPS("0.5"),
+    CANDY("0.65"),
+    NOTHING("-1.0");
 
 
-    private final float price;
+    private final BigDecimal price;
 
-    Product(float price) {
-        this.price = price;
+    Product(String price) {
+        this.price = new BigDecimal(price);
     }
 
-    public float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 }

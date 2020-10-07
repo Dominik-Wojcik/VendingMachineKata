@@ -4,6 +4,7 @@ import com.codecool.model.Coin;
 import com.codecool.model.Product;
 import com.codecool.model.Value;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -41,11 +42,11 @@ public class Machine {
 
     public Product selectProduct(Product product) {
         if (machineStock.get(product) >= 1){
-            if (getCoinsSum(customerCoins) == product.getPrice()) {
+            if (getCoinsSum(customerCoins).equals(product.getPrice())) {
                 addCoinsToMachine();
                 currentDisplay = "THANK YOU";
                 return product;
-            } else if (getCoinsSum(customerCoins) > product.getPrice()) {
+            } else if (getCoinsSum(customerCoins).compareTo(product.getPrice()) >= 0) {
                 if (checkIfChangePossibleAndDispenseIt(product)) {
                     addCoinsToMachine();
                     currentDisplay = "THANK YOU";
@@ -76,18 +77,18 @@ public class Machine {
     public String showReturn() {
         StringBuilder coins = new StringBuilder();
         for (Coin coin : returnedCoins) {
-            coins.append(coin.getValue().getValue()).append(",");
+            coins.append(coin.getValue().getValue().toString()).append(",");
         }
         return coins.toString();
     }
 
-    private boolean checkIfChangePossibleAndDispenseIt(Product product) {
-        float change = getCoinsSum(customerCoins) - product.getPrice();
-        int quarters = (int) (change / 0.25);
-        float quartersRest = change % 0.25F;
-        int dimes = (int) (quartersRest / 0.1);
-        float dimesRest = dimes % 0.1F;
-        int nickels = (int) (dimesRest / 0.05);
+    private boolean checkIfChangePossibleAndDispenseIt(Product product) { // change 0.30 is needed but machine has 0.25 and 3 times 0.10
+        BigDecimal change = getCoinsSum(customerCoins).subtract(product.getPrice());
+        int quarters = change.divide(BigDecimal.valueOf(0.25)).intValue();
+        BigDecimal quartersRest = change.divideAndRemainder(BigDecimal.valueOf(0.25))[1];
+        int dimes = quartersRest.divide(BigDecimal.valueOf(0.10)).intValue();
+        BigDecimal dimesRest = quartersRest.divideAndRemainder(BigDecimal.valueOf(0.10))[1];
+        int nickels = dimesRest.divide(BigDecimal.valueOf(0.05)).intValue();
         if (machineCoins.get(Value.QUARTER) >= quarters &&
                 machineCoins.get(Value.DIME) >= dimes && machineCoins.get(Value.NICKEL) >= nickels) {
             addCoinToReturn(quarters, Value.QUARTER);
@@ -111,12 +112,11 @@ public class Machine {
         }
     }
 
-    private float getCoinsSum(ArrayList<Coin> coins) {
-        float sum = 0;
+    private BigDecimal getCoinsSum(List<Coin> coins) {
+        BigDecimal sum = new BigDecimal("0");
         for (Coin coin : coins) {
-            sum += coin.getValue().getValue();
+            sum = sum.add(coin.getValue().getValue());
         }
-//        return new BigDecimal(sum).round(new MathContext(2)).doubleValue();
         return sum;
     }
 }

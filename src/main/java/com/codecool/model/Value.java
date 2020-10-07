@@ -1,19 +1,21 @@
 package com.codecool.model;
 
+import java.math.BigDecimal;
+
 public enum Value {
-    NICKEL(0.05F),
-    DIME(0.10F),
-    QUARTER(0.25F),
-    NOT_WORTHY(0);
+    NICKEL("0.05"),
+    DIME("0.10"),
+    QUARTER("0.25"),
+    NOT_WORTHY("0");
 
-    private final float value;
+    private final BigDecimal value;
 
-    Value(float value) {
+    Value(String value) {
 
-        this.value = value;
+        this.value = new BigDecimal(value);
     }
 
-    public float getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 }
