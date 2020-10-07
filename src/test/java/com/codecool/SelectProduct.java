@@ -8,13 +8,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
 public class SelectProduct {
 
-    private final HashMap<Value, Integer> machineCoins = new HashMap<>();
-    private final HashMap<Product, Integer> machineStock = new HashMap<>();
+    private final Map<Value, Integer> machineCoins = new HashMap<>();
+    private final Map<Product, Integer> machineStock = new HashMap<>();
     private Machine machine;
 
     @BeforeEach
@@ -50,7 +51,7 @@ public class SelectProduct {
         Assertions.assertAll("Should dispense candy and change",
                 () -> assertEquals(Product.CANDY, machine.selectProduct(Product.CANDY)),
                 () -> assertEquals("THANK YOU", machine.showDisplay()),
-                () -> assertEquals("0.1,0.05,", machine.showReturn()));
+                () -> assertEquals("0.10,", machine.showReturn()));
     }
 
     @Test

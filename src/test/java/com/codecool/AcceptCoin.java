@@ -9,11 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class AcceptCoin
 {
-    private final HashMap<Value, Integer> machineCoins = new HashMap<>();
-    private final HashMap<Product, Integer> machineStock = new HashMap<>();
+    private final Map<Value, Integer> machineCoins = new HashMap<>();
+    private final Map<Product, Integer> machineStock = new HashMap<>();
     private Machine machine;
 
     @BeforeEach
@@ -34,7 +35,7 @@ public class AcceptCoin
     public void shouldNotAcceptCoins() {
         machine.insertCoin(new Coin(Value.NOT_WORTHY));
         System.out.println();
-        assertEquals("0.0,", machine.showReturn());
+        assertEquals("0,", machine.showReturn());
     }
 
     private void fillMaps(){

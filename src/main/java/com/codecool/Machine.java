@@ -5,16 +5,17 @@ import com.codecool.model.Product;
 import com.codecool.model.Value;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Machine {
-    private final ArrayList<Coin> customerCoins;
-    private final ArrayList<Coin> returnedCoins;
-    private final HashMap<Value, Integer> machineCoins;
-    private final HashMap<Product, Integer> machineStock;
+    private final List<Coin> customerCoins;
+    private final List<Coin> returnedCoins;
+    private final Map<Value, Integer> machineCoins;
+    private final Map<Product, Integer> machineStock;
     private String currentDisplay;
 
-    public Machine(HashMap<Value, Integer> machineCoins, HashMap<Product, Integer> machineStock) {
+    public Machine(Map<Value, Integer> machineCoins, Map<Product, Integer> machineStock) {
         this.customerCoins = new ArrayList<>();
         this.returnedCoins = new ArrayList<>();
         this.machineCoins = machineCoins;
